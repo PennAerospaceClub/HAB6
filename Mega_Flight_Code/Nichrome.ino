@@ -2,8 +2,8 @@
 void nichromeCheck(){
 
   //check that we are outside the boundary and not falling thirty consecutive times
-  //if (!inBdryBox() && !isFalling() && !nichromeStarted && !nichromeFinished){
-  if(millis() > 30000 && !nichromeStarted && !nichromeFinished){
+  if (!inBdryBox() && !isFalling() && !nichromeStarted && !nichromeFinished){
+  //if(millis() > 30000 && !nichromeStarted && !nichromeFinished){
     nichromeCounter++;
     //if we have met this condition thirty consecutive times, start the nichrome
     if(nichromeCounter >= 30){
