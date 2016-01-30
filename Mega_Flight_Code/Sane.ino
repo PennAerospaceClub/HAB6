@@ -20,6 +20,9 @@ boolean initSane(){
     digitalWrite(LED_RED, LOW);
     digitalWrite(LED_YELLOW, LOW);
     onLED = true;
+
+    logSD("Sanity Passed");
+    dataSD("time,roll,pitch,heading,gyrox,gyroy,gyroz,lat,long,alt,fall,bdry,cut");
     
     return true;
   }
