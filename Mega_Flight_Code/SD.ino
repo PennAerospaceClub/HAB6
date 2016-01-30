@@ -31,10 +31,11 @@ String dataLogging(){
     nichrome = "2";
   }
   
-  String dataString = imuDataString 
+  String dataString = imuData 
                     + (String)longit + "," 
                     + (String)lat + "," 
                     + (String)alt + ","
+                    + uvData + ","
                     + falling + "," 
                     + bdry + ","
                     + nichrome;

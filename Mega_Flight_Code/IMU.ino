@@ -22,28 +22,28 @@ void runIMU(){
   sensors_event_t gyro_event;
   sensors_vec_t   orientation;
   
-  imuDataString = "";     
-  imuDataString.concat(hour()); imuDataString.concat(":"); imuDataString.concat(minute()); imuDataString.concat(":"); imuDataString.concat(second()); imuDataString.concat(",");
+  imuData = "";     
+  imuData.concat(hour()); imuData.concat(":"); imuData.concat(minute()); imuData.concat(":"); imuData.concat(second()); imuData.concat(",");
     
   accel.getEvent(&accel_event);
   if (dof.accelGetOrientation(&accel_event, &orientation))
   {
     /* 'orientation' should have valid .roll and .pitch fields */
-    imuDataString.concat(orientation.roll); imuDataString.concat(",");
-    imuDataString.concat(orientation.pitch); imuDataString.concat(",");
+    imuData.concat(orientation.roll); imuData.concat(",");
+    imuData.concat(orientation.pitch); imuData.concat(",");
   }
   
   /* Display the results (magnetic vector values are in micro-Tesla (uT)) */
   mag.getEvent(&mag_event);
   if (dof.magGetOrientation(SENSOR_AXIS_Z, &mag_event, &orientation))
   {
-    imuDataString.concat(orientation.heading); imuDataString.concat(",");
+    imuData.concat(orientation.heading); imuData.concat(",");
   }
 
   /* Display the results (gyrocope values in rad/s) */
   gyro.getEvent(&gyro_event);
-  imuDataString.concat(gyro_event.gyro.x); imuDataString.concat(",");
-  imuDataString.concat(gyro_event.gyro.y); imuDataString.concat(",");
-  imuDataString.concat(gyro_event.gyro.z); imuDataString.concat(",");
+  imuData.concat(gyro_event.gyro.x); imuData.concat(",");
+  imuData.concat(gyro_event.gyro.y); imuData.concat(",");
+  imuData.concat(gyro_event.gyro.z); imuData.concat(",");
  }
 

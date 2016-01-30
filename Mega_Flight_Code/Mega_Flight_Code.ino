@@ -7,19 +7,24 @@
 #include <Adafruit_L3GD20_U.h>
 #include <Adafruit_9DOF.h>
 #include <Time.h>
-
-//#include <Adafruit_10DOF.h> //10Dof
-//#include <Adafruit_BMP085_U.h> //10Dof barometric/temperature)
-
+//UV
+#include <Adafruit_SI1145.h>
+//Servo
+#include <Servo.h>
 //SD
 #include <SD.h>
 #include <SPI.h>
-
 //Serial
 #include <SoftwareSerial.h>
 
+//UV
+Adafruit_SI1145 uv = Adafruit_SI1145();
+
+//Data
+String imuData = "";
+String uvData = "";
+
 //IMU
-String imuDataString = "";
 Adafruit_9DOF                dof   = Adafruit_9DOF();
 Adafruit_LSM303_Accel_Unified accel = Adafruit_LSM303_Accel_Unified(30301);
 Adafruit_LSM303_Mag_Unified   mag   = Adafruit_LSM303_Mag_Unified(30302);
@@ -56,6 +61,8 @@ boolean sane = false;
 boolean inBdry = false;
 boolean falling = true;
 boolean initSD = false;
+boolean initUV = false;
+boolean initServo = false;
 
 //LED
 const int LED_GREEN = 23;
@@ -74,6 +81,10 @@ boolean nichromeStarted = false;
 boolean nichromeFinished = false;
 unsigned long int nichromeEndTime = 0;
 int nichromeCounter = 0;
+
+//Servo
+const int SERVO_PIN = 12;
+Servo releaseServo;
 
 void setup() {
   Serial.begin(9600);
@@ -113,9 +124,13 @@ void loop() {
   Serial.print(lat); Serial.print(", "); Serial.print(longit); Serial.print(", "); Serial.println(alt); 
 
   runIMU();
-  Serial.println(imuDataString);
+  Serial.println(imuData);
+
+  runUV();
+  Serial.println(uvData);
 
   nichromeCheck();
+  servoCheck();
   
   //Time Controlled: SD, Serial LED
   if(millis() >= nextWrite5){

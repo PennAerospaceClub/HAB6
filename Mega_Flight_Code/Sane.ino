@@ -14,15 +14,28 @@ boolean initSane(){
       initSD = true;
     }
   }
+  if(!initUV){
+    if (!uv.begin()) {
+      Serial.println("uv");
+      initUV = true;
+    }
+  }  
+  if(!initServo){
+    releaseServo.attach(SERVO_PIN);
+    if(releaseServo.attached()){
+      Serial.println("servo");
+      initServo = true;
+    } 
+  }    
   
-  if(inBdry && !falling && initSD){
+  if(inBdry && !falling && initSD && initUV){
     digitalWrite(LED_GREEN, HIGH);
     digitalWrite(LED_RED, LOW);
     digitalWrite(LED_YELLOW, LOW);
     onLED = true;
 
     logSD("Sanity Passed");
-    dataSD("time,roll,pitch,heading,gyrox,gyroy,gyroz,lat,long,alt,fall,bdry,cut");
+    dataSD("time,roll,pitch,heading,gyrox,gyroy,gyroz,lat,long,alt,uv,fall,bdry,cut");
     
     return true;
   }
