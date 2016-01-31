@@ -62,7 +62,7 @@ boolean inBdry = false;
 boolean falling = true;
 boolean initSD = false;
 boolean initUV = false;
-boolean initServo = false;
+
 
 //LED
 const int LED_GREEN = 23;
@@ -76,6 +76,7 @@ unsigned long int nextWrite1 = 0;
 unsigned long int nextWrite5 = 0;
 
 //Nichrome
+boolean servoRan = false;
 const int NICHROME_PIN = 31;
 boolean nichromeStarted = false;
 boolean nichromeFinished = false;
@@ -103,6 +104,9 @@ void setup() {
   pinMode(NICHROME_PIN, OUTPUT);
   digitalWrite(NICHROME_PIN, LOW);
 
+  //Servo
+  releaseServo.attach(SERVO_PIN);
+
   //End Setup
   digitalWrite(LED_GREEN, LOW);
   digitalWrite(LED_YELLOW, LOW);
@@ -120,21 +124,21 @@ void loop() {
       Serial.print(lat); Serial.print(", "); Serial.print(longit); Serial.print(", "); Serial.println(alt); 
   }
 
-  Serial.println("GPS");
+  Serial.print("GPS, ");
   readGPS();
   //Serial.print(lat); Serial.print(", "); Serial.print(longit); Serial.print(", "); Serial.println(alt); 
 
-  Serial.println("IMU");
+  Serial.print("IMU, ");
   runIMU();
   //Serial.println(imuData);
 
-  Serial.println("UV");
+  Serial.print("UV, ");
   runUV();
   //Serial.println(uvData);
 
   Serial.println("Nich");
   nichromeCheck();
-//  servoCheck(); //for now
+  servoCheck(); //for now
   
   //Time Controlled: SD, Serial LED
   if(millis() >= nextWrite5){

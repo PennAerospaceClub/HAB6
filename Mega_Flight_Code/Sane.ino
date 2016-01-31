@@ -19,14 +19,7 @@ boolean initSane(){
       Serial.println("uv");
       initUV = true;
     }
-  }  
-  if(!initServo){
-    releaseServo.attach(SERVO_PIN);
-    if(releaseServo.attached()){
-      Serial.println("servo");
-      initServo = true;
-    } 
-  }    
+  }      
   
   if(inBdry && !falling && initSD && initUV){
     digitalWrite(LED_GREEN, HIGH);

@@ -21,6 +21,8 @@ void runIMU(){
   sensors_event_t mag_event;
   sensors_event_t gyro_event;
   sensors_vec_t   orientation;
+
+  Serial.println("IMU1");
   
   imuData = "";     
   imuData.concat(hour()); imuData.concat(":"); imuData.concat(minute()); imuData.concat(":"); imuData.concat(second()); imuData.concat(",");
@@ -32,6 +34,11 @@ void runIMU(){
     imuData.concat(orientation.roll); imuData.concat(",");
     imuData.concat(orientation.pitch); imuData.concat(",");
   }
+  else{
+    imuData.concat(","); imuData.concat(",");
+  }
+
+  Serial.println("IMU2");
   
   /* Display the results (magnetic vector values are in micro-Tesla (uT)) */
   mag.getEvent(&mag_event);
@@ -39,6 +46,11 @@ void runIMU(){
   {
     imuData.concat(orientation.heading); imuData.concat(",");
   }
+  else{
+    imuData.concat(",");
+  }
+
+  Serial.println("IMU3");
 
   /* Display the results (gyrocope values in rad/s) */
   gyro.getEvent(&gyro_event);
