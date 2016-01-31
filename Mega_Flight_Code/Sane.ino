@@ -15,7 +15,7 @@ boolean initSane(){
     }
   }
   if(!initUV){
-    if (!uv.begin()) {
+    if (uv.begin()) {
       Serial.println("uv");
       initUV = true;
     }
@@ -35,7 +35,9 @@ boolean initSane(){
     onLED = true;
 
     logSD("Sanity Passed");
-    dataSD("time,roll,pitch,heading,gyrox,gyroy,gyroz,lat,long,alt,uv,fall,bdry,cut");
+    String titletext = "time,roll,pitch,heading,gyrox,gyroy,gyroz,lat,long,alt,uv,fall,bdry,cut";
+    dataSD(titletext);
+    Serial.println(titletext);
     
     return true;
   }

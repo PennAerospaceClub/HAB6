@@ -1,9 +1,6 @@
 void servoCheck(){
-  if(1){
+  if(nichromeStarted && nichromeFinished){
     releaseServo.write(130);
-  }
-  else{
-    releaseServo.write(50);
   }
 }
 

@@ -117,20 +117,24 @@ void loop() {
   while(!sane){
     sane = initSane();
       readGPS();
- //     Serial.print(lat); Serial.print(", "); Serial.print(longit); Serial.print(", "); Serial.println(alt); 
+      Serial.print(lat); Serial.print(", "); Serial.print(longit); Serial.print(", "); Serial.println(alt); 
   }
-  
+
+  Serial.println("GPS");
   readGPS();
-  Serial.print(lat); Serial.print(", "); Serial.print(longit); Serial.print(", "); Serial.println(alt); 
+  //Serial.print(lat); Serial.print(", "); Serial.print(longit); Serial.print(", "); Serial.println(alt); 
 
+  Serial.println("IMU");
   runIMU();
-  Serial.println(imuData);
+  //Serial.println(imuData);
 
+  Serial.println("UV");
   runUV();
-  Serial.println(uvData);
+  //Serial.println(uvData);
 
+  Serial.println("Nich");
   nichromeCheck();
-  servoCheck();
+//  servoCheck(); //for now
   
   //Time Controlled: SD, Serial LED
   if(millis() >= nextWrite5){
