@@ -28,7 +28,7 @@ boolean initSane(){
     onLED = true;
 
     logSD("Sanity Passed");
-    String titletext = "time,roll,pitch,heading,gyrox,gyroy,gyroz,lat,long,alt,uv,fall,bdry,cut";
+    String titletext = "time,roll,pitch,heading,gyrox,gyroy,gyroz,lat,long,alt,uv,solar,fall,bdry,cut";
     dataSD(titletext);
     Serial.println(titletext);
     

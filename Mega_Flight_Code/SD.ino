@@ -36,6 +36,7 @@ String dataLogging(){
                     + (String)lat + "," 
                     + (String)alt + ","
                     + uvData + ","
+                    + (String)solarVal + ","
                     + falling + "," 
                     + bdry + ","
                     + nichrome;

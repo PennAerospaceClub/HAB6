@@ -22,40 +22,52 @@ void runIMU(){
   sensors_event_t gyro_event;
   sensors_vec_t   orientation;
 
-  Serial.println("IMU1");
+  Serial.print("IMU1, ");
   
   imuData = "";     
   imuData.concat(hour()); imuData.concat(":"); imuData.concat(minute()); imuData.concat(":"); imuData.concat(second()); imuData.concat(",");
     
-  accel.getEvent(&accel_event);
-  if (dof.accelGetOrientation(&accel_event, &orientation))
-  {
-    /* 'orientation' should have valid .roll and .pitch fields */
-    imuData.concat(orientation.roll); imuData.concat(",");
-    imuData.concat(orientation.pitch); imuData.concat(",");
+  if(accel.getEvent(&accel_event)){
+    if (dof.accelGetOrientation(&accel_event, &orientation))
+    {
+      /* 'orientation' should have valid .roll and .pitch fields */
+      imuData.concat(orientation.roll); imuData.concat(",");
+      imuData.concat(orientation.pitch); imuData.concat(",");
+    }
+    else{
+      imuData.concat(","); imuData.concat(",");
+    }
   }
   else{
     imuData.concat(","); imuData.concat(",");
   }
 
-  Serial.println("IMU2");
+  Serial.print("IMU2, ");
   
   /* Display the results (magnetic vector values are in micro-Tesla (uT)) */
-  mag.getEvent(&mag_event);
-  if (dof.magGetOrientation(SENSOR_AXIS_Z, &mag_event, &orientation))
-  {
-    imuData.concat(orientation.heading); imuData.concat(",");
+  if(mag.getEvent(&mag_event)){
+    if (dof.magGetOrientation(SENSOR_AXIS_Z, &mag_event, &orientation))
+    {
+      imuData.concat(orientation.heading); imuData.concat(",");
+    }
+    else{
+      imuData.concat(",");
+    }
   }
   else{
     imuData.concat(",");
   }
 
-  Serial.println("IMU3");
+  Serial.print("IMU3, ");
 
   /* Display the results (gyrocope values in rad/s) */
-  gyro.getEvent(&gyro_event);
-  imuData.concat(gyro_event.gyro.x); imuData.concat(",");
-  imuData.concat(gyro_event.gyro.y); imuData.concat(",");
-  imuData.concat(gyro_event.gyro.z); imuData.concat(",");
+  if(gyro.getEvent(&gyro_event)){
+    imuData.concat(gyro_event.gyro.x); imuData.concat(",");
+    imuData.concat(gyro_event.gyro.y); imuData.concat(",");
+    imuData.concat(gyro_event.gyro.z); imuData.concat(",");
+  }
+  else{
+    imuData.concat(","); imuData.concat(","); imuData.concat(",");
+  }
  }
 

@@ -52,6 +52,7 @@ String slat = "";
 String slongit = "";
 String salt = "";
 boolean gooddata = false;
+unsigned long int gpsMaxSearchTime = millis() + 5000;
 
 //SD
 int CSPIN = 53;
@@ -65,9 +66,9 @@ boolean initUV = false;
 
 
 //LED
-const int LED_GREEN = 23;
-const int LED_YELLOW = 25;
-const int LED_RED = 27;
+const int LED_GREEN = 10;
+const int LED_YELLOW = 9;
+const int LED_RED = 8;
 //Blinking lights
 boolean onLED = false;
 
@@ -77,7 +78,7 @@ unsigned long int nextWrite5 = 0;
 
 //Nichrome
 boolean servoRan = false;
-const int NICHROME_PIN = 31;
+const int NICHROME_PIN = 11;
 boolean nichromeStarted = false;
 boolean nichromeFinished = false;
 unsigned long int nichromeEndTime = 0;
@@ -87,6 +88,10 @@ int nichromeCounter = 0;
 const int SERVO_PIN = 12;
 Servo releaseServo;
 
+//Solar Panel
+#define SOLAR_PIN A0
+int solarVal = 0;
+
 void setup() {
   Serial.begin(9600);
   Serial1.begin(9600); //GPS
@@ -95,6 +100,9 @@ void setup() {
   pinMode(LED_GREEN, OUTPUT); digitalWrite(LED_GREEN, HIGH);
   pinMode(LED_YELLOW, OUTPUT); digitalWrite(LED_YELLOW, HIGH);
   pinMode(LED_RED, OUTPUT); digitalWrite(LED_RED, HIGH);
+
+  //Solar
+  pinMode(SOLAR_PIN, INPUT);
 
   //IMU
   initIMU();
@@ -106,6 +114,7 @@ void setup() {
 
   //Servo
   releaseServo.attach(SERVO_PIN);
+  releaseServo.write(10);
 
   //End Setup
   digitalWrite(LED_GREEN, LOW);
@@ -114,8 +123,6 @@ void setup() {
   nextWrite5 = millis() + 5000;
   nextWrite1 = millis() + 1000;
 }
-
-  unsigned long int gpsMaxSearchTime = millis() + 5000;
 
 void loop() {
   while(!sane){
@@ -136,9 +143,12 @@ void loop() {
   runUV();
   //Serial.println(uvData);
 
-  Serial.println("Nich");
+  Serial.print("Nich, ");
   nichromeCheck();
   servoCheck(); //for now
+
+  Serial.println("Solar");
+  solarVal = analogRead(SOLAR_PIN);
   
   //Time Controlled: SD, Serial LED
   if(millis() >= nextWrite5){
