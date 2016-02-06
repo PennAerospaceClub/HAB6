@@ -26,6 +26,9 @@ boolean initSane(){
     digitalWrite(LED_RED, LOW);
     digitalWrite(LED_YELLOW, LOW);
     onLED = true;
+  else if (nextWrite1){
+    
+  }
 
     logSD("Sanity Passed");
     String titletext = "time,roll,pitch,heading,gyrox,gyroy,gyroz,lat,long,alt,uv,solar,fall,bdry,cut";
