@@ -34,11 +34,11 @@ Adafruit_L3GD20_Unified       gyro  = Adafruit_L3GD20_Unified(20);
 
 //Position
 //Boundary Box UPDATE DAY OF LAUNCH WITH MOST RECENT SIMULATION
-long int minLat = 39000000;//xx°xx.xxxx' 40010950
-long int maxLat = 41000000; //40337066
-long int minLong = 74000000; //75462700
-long int maxLong = 78000000; //77044366
-long int maxWantedAlt = 31000; //Maximum wanted altitude (BDRY) 31000
+long int minLat = 39596216;//xx°xx.xxxx' 40010950
+long int maxLat = 40297450; //40337066
+long int minLong = 76208483; //75462700
+long int maxLong = 77093716; //77044366
+long int maxWantedAlt = 10000; //Maximum wanted altitude (BDRY) 31000
 
 //Initialize Location Data
 long int lat = -1; 
@@ -115,6 +115,7 @@ void setup() {
   //Servo
   releaseServo.attach(SERVO_PIN);
   releaseServo.write(10);
+  delay(1000);
 
   //End Setup
   digitalWrite(LED_GREEN, LOW);
